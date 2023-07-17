@@ -1,5 +1,7 @@
 using Tracy
+@info("Waiting for capture client connection", port=get(ENV, "TRACY_PORT", "9000"))
 Tracy.wait_for_tracy()
+println("Connected!")
 
 @tracepoint "test tracepoint" begin
     println("Hello, world!")
