@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -eou pipefail
+
+TRACY_REPO="$(dirname $( cd "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" &> /dev/null && pwd ))"
+TRACY_LIB_DIR="${TRACY_REPO}/lib"
+
+echo "--- Instantiating tracy's environment"
+julia --project="${TRACY_LIB_DIR}" -e "using Pkg; Pkg.instantiate()"
+
+echo "--- Starting tracy listener"
+# Choose a random port number (to avoid collisions between multiple workers
+# on the same machine), then launch the listener in the background
+export TRACY_PORT=$(( ${RANDOM} % 1000 + 9000 ))
+set -x
+julia --project="${TRACY_LIB_DIR}" "${TRACY_LIB_DIR}/start_listener.jl" &

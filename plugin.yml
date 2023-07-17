@@ -1,0 +1,9 @@
+name: Tracy
+description: Easily capture tracy traces of Julia test uns
+author: https://github.com/staticfloat
+requirements: []
+configuration:
+  properties:
+    trace:
+      type: string
+  additionalProperties: false

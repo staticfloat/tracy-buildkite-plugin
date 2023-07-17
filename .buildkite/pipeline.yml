@@ -1,0 +1,16 @@
+steps:
+  - label: ":chart_with_upwards_trend: Run Tracy workload"
+    agents:
+      queue: "juliaecosystem"
+      arch: "x86_64"
+    plugins:
+      - JuliaCI/julia#v1:
+          version: 1
+      # Use the current directory as the plugin source, so we're testing this version of `tracy`
+      - "./.buildkite/plugins/tracy":
+          trace: "test.tracy"
+    commands: |
+      julia --project=test -e 'import Pkg; Pkg.instantiate()'
+      julia --project=test test/runtests.jl
+    artifacts:
+      - test.tracy
