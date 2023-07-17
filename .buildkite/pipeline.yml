@@ -2,6 +2,7 @@ steps:
   - label: ":chart_with_upwards_trend: Run Tracy workload"
     agents:
       queue: "juliaecosystem"
+      os: "linux"
       arch: "x86_64"
     plugins:
       - JuliaCI/julia#v1:
