@@ -4,12 +4,16 @@ set -eou pipefail
 TRACY_REPO="$( cd "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" &> /dev/null && pwd )"
 TRACY_LIB_DIR="${TRACY_REPO}/lib"
 
-echo "--- Instantiating tracy's environment"
-julia --project="${TRACY_LIB_DIR}" -e "using Pkg; Pkg.instantiate()"
-
+# Standardize some environment variables
+export BUILDKITE_PLUGIN_TRACY_TRACE="${BUILDKITE_PLUGIN_TRACY_TRACE:-out.trace}"
+export TRACY_PID_FILE="${TMPDIR:-/tmp}/tracy_capture_agent.pid"
 # Choose a random port number (to avoid collisions between multiple workers
 # on the same machine), then launch the listener in the background
 export TRACY_PORT=$(( ${RANDOM} % 1000 + 9000 ))
+
+echo "--- Instantiating tracy's environment"
+julia --project="${TRACY_LIB_DIR}" -e "using Pkg; Pkg.instantiate()"
+
 echo "--- Starting tracy listener (port ${TRACY_PORT})"
 nohup julia --project="${TRACY_LIB_DIR}" "${TRACY_LIB_DIR}/start_capture_agent.jl" >>capture_agent.log 2>>capture_agent.log </dev/null &
-echo "Launched as PID $!"
+echo "$!" >> "${TRACY_PID_FILE}"

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -eou pipefail
+TRACY_REPO="$( cd "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" &> /dev/null && pwd )"
+TRACY_LIB_DIR="${TRACY_REPO}/lib"
+
+if [[ -f "${TRACY_PID_FILE}" ]]; then
+    # X-ref: https://unix.stackexchange.com/a/626632/29688
+    PID="$(cat "${TRACY_PID_FILE}")"
+    echo "Waiting for PID ${PID} to exit..."
+    until kill -s 0 "${PID}" 2>/dev/null; do
+        sleep 1
+        echo
+        date
+        ps aux
+        ls -la "${BUILDKITE_PLUGIN_TRACY_TRACE}"
+    done
+    rm -f "${TRACY_PID_FILE}"
+fi
