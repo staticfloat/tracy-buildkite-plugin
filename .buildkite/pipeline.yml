@@ -15,3 +15,6 @@ steps:
       julia --project=test test/runtests.jl
     artifacts:
       - test.tracy
+      - capture_agent.log
+    # Don't waste queue time if we run into some kind of hang
+    timeout_in_minutes: 5
