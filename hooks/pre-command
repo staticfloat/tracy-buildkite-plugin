@@ -17,3 +17,6 @@ julia --project="${TRACY_LIB_DIR}" -e "using Pkg; Pkg.instantiate()"
 echo "--- Starting tracy listener (port ${TRACY_PORT})"
 nohup julia --project="${TRACY_LIB_DIR}" "${TRACY_LIB_DIR}/start_capture_agent.jl" >>capture_agent.log 2>>capture_agent.log </dev/null &
 echo "$!" >> "${TRACY_PID_FILE}"
+PID="$(cat "${TRACY_PID_FILE}")"
+echo "Launched as PID ${PID}"
+ps ww "${PID}"

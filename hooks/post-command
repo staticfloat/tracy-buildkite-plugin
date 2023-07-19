@@ -12,7 +12,7 @@ if [[ -f "${TRACY_PID_FILE}" ]]; then
         sleep 1
         echo
         date
-        ps auwwx "${PID}"
+        ps ww "${PID}" || true
         ls -la "${BUILDKITE_PLUGIN_TRACY_TRACE}"
     done
     rm -f "${TRACY_PID_FILE}"
