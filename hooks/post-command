@@ -14,6 +14,7 @@ if [[ -f "${TRACY_PID_FILE}" ]]; then
         date
         ps ww "${PID}" || true
         ls -la "${BUILDKITE_PLUGIN_TRACY_TRACE}"
+        kill "${PID}" || true
     done
     rm -f "${TRACY_PID_FILE}"
 fi
