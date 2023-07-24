@@ -19,4 +19,4 @@ nohup julia --project="${TRACY_LIB_DIR}" "${TRACY_LIB_DIR}/start_capture_agent.j
 echo "$!" >> "${TRACY_PID_FILE}"
 PID="$(cat "${TRACY_PID_FILE}")"
 echo "Launched as PID ${PID}"
-ps ww "${PID}"
+ps ww "${PID}" || true
