@@ -18,3 +18,7 @@ if [[ -f "${TRACY_PID_FILE}" ]]; then
     done
     rm -f "${TRACY_PID_FILE}"
 fi
+
+if [[ -f "${BUILDKITE_PLUGIN_TRACY_TRACE}" ]]; then
+    echo "Trace detected, view it at: https://topolarity.github.io/tracy-traces/experimental/"
+fi
