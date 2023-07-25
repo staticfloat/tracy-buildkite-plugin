@@ -9,12 +9,13 @@ steps:
           version: 1
       # Use the current directory as the plugin source, so we're testing this version of `tracy`
       - "./.buildkite/plugins/tracy":
-          trace: "test.tracy"
+          trace: "test.trace"
+          num_traces: 1
     commands: |
       julia --project=test -e 'import Pkg; Pkg.instantiate()'
       julia --project=test test/runtests.jl
     artifacts:
-      - test.tracy
+      - "*.trace"
       - capture_agent.log
     # Don't waste queue time if we run into some kind of hang
     timeout_in_minutes: 5
@@ -29,12 +30,13 @@ steps:
           version: 1
       # Use the current directory as the plugin source, so we're testing this version of `tracy`
       - "./.buildkite/plugins/tracy":
-          trace: "test.tracy"
+          trace: "test"
+          num_traces: 1
     commands: |
       julia --project=test -e 'import Pkg; Pkg.instantiate()'
       julia --project=test test/runtests.jl
     artifacts:
-      - test.tracy
+      - "*.trace"
       - capture_agent.log
     # Don't waste queue time if we run into some kind of hang
     timeout_in_minutes: 5

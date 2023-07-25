@@ -5,7 +5,8 @@ TRACY_REPO="$( cd "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" &> /dev/null
 TRACY_LIB_DIR="${TRACY_REPO}/lib"
 
 # Standardize some environment variables
-export BUILDKITE_PLUGIN_TRACY_TRACE="${BUILDKITE_PLUGIN_TRACY_TRACE:-out.trace}"
+export BUILDKITE_PLUGIN_TRACY_TRACE="${BUILDKITE_PLUGIN_TRACY_TRACE:-out}"
+export BUILDKITE_PLUGIN_TRACY_NUM_TRACES="${BUILDKITE_PLUGIN_TRACY_NUM_TRACES:-100000}"
 export TRACY_PID_FILE="${TMPDIR:-/tmp}/tracy_capture_agent.pid"
 # Choose a random port number (to avoid collisions between multiple workers
 # on the same machine), then launch the listener in the background

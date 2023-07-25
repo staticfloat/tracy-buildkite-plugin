@@ -13,12 +13,11 @@ if [[ -f "${TRACY_PID_FILE}" ]]; then
         echo
         date
         ps ww "${PID}" || true
-        ls -la "${BUILDKITE_PLUGIN_TRACY_TRACE}"
         kill "${PID}" || true
     done
     rm -f "${TRACY_PID_FILE}"
 fi
 
-if [[ -f "${BUILDKITE_PLUGIN_TRACY_TRACE}" ]]; then
+if [[ -e "${BUILDKITE_PLUGIN_TRACY_TRACE}"* ]]; then
     echo "Trace detected, view it at: https://topolarity.github.io/tracy-traces/experimental/"
 fi
