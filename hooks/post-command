@@ -8,7 +8,7 @@ if [[ -f "${TRACY_PID_FILE}" ]]; then
     # X-ref: https://unix.stackexchange.com/a/626632/29688
     PID="$(cat "${TRACY_PID_FILE}")"
     echo "Waiting for PID ${PID} to exit..."
-    until kill -s 0 "${PID}" 2>/dev/null; do
+    until ! kill -s 0 "${PID}" 2>/dev/null; do
         sleep 1
         echo
         date
