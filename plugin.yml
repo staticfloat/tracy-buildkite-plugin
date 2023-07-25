@@ -6,4 +6,6 @@ configuration:
   properties:
     trace:
       type: string
+    num_traces:
+      type: int
   additionalProperties: false
